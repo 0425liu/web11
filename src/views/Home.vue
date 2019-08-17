@@ -2,7 +2,7 @@
   <div class="home">
  
   {{name}}
- <VuexTest :value.sync="name"></VuexTest>
+ <VuexTest :value.sync="name"   v-permission="['admin']"></VuexTest>
   </div>
 </template>
 

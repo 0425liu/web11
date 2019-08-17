@@ -3,10 +3,13 @@ import App from "./App.vue";
 // import router from './router'
 import router from "./router";
 import store from './store'
+
 // 路由守卫
 import ElementUI from 'element-ui';
 import "./permission";
+import vPermission from "@/directive/permission"
 Vue.use(ElementUI)
+Vue.directive("permission",vPermission)
 Vue.config.productionTip = false;
 // Vue.prototype.$dispatch = function (eventName, data) {
 //   let parent = this.$parent;

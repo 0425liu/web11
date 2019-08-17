@@ -2,7 +2,7 @@
   <!-- element-ui提供的面包屑组件 -->
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
-      <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
+      <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.name">
         <!-- 不能跳转：路由没有配置重定向或当前项已经是最后一项 -->
         <span
           v-if="item.redirect==='noRedirect'||index==levelList.length-1"
@@ -77,7 +77,7 @@ export default {
         return;
       }
       // 编译path，避免存在路径参数
-      console.log(this.pathCompile(path))
+     
       this.$router.push(this.pathCompile(path));
     }
   }
