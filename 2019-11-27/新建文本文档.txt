@@ -1,0 +1,8 @@
+http://47.111.108.163:8080/detecting/ScreenController.do?getYearData
+年度检测设备数量 饼状图
+
+http://47.111.108.163:8080/detecting/ScreenController.do?getCurMonthEveryDayData
+每日检测数量及合格数量 双折线图
+
+http://47.111.108.163:8080/detecting/ScreenController.do?getYearQualifiedData
+年度检测设备合格数量 多柱状图
