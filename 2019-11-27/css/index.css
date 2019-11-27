@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body, html {
+  height: 100%;
+}
+body {
+  background: url(../img/bg.jpg) no-repeat;
+  background-size: 100% 100%;
+  font-family: "SimHei";
+  color: #fff;
+}
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-top: 1px solid #1a2964;
+  background: rgba(38, 47, 73, .3);
+  height: 60px;
+}
+header .logo {
+  margin-left: 5%;
+}
+header .caption {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.content {
+  position: fixed;
+  top: 105px;
+  bottom: 20px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.l-box, .r-box {
+  position: absolute;
+  width: 27.5%;
+  top: 0;
+  bottom: 0;
+}
+.shadow-box {
+  border: 2px solid #00ffe4;
+  box-shadow: rgb(11, 234, 235) 0px 0px 18px inset;
+  border-radius: 10px;
+  display: inline-block;
+}
+.l-box .shadow-box {
+  font-size: 25px;
+  text-align: center;
+  line-height: 60px;
+  margin: 0 auto;
+  width: 60%;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.l-box {
+  left: 15px;
+  padding-top: 75px;
+}
+.l-chart {
+  height: 33.3%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 10px;
+  background-size: 100% 100%;
+}
+.l-chart .bg-box {
+  height: 100%;
+  background: url(../img/bg1.png) no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  padding: 9% 6% 6%;
+  box-sizing: border-box;
+}
+.title {
+  color: #65c6e7;
+  font-size: 17px;
+  position: absolute;
+  font-weight: bold;
+  top: 4%;
+  left: 7%;
+}
+
+/* pie */
+
+.swiper-container {
+  height: 100%;
+}
+.pie-box {
+  overflow: hidden;
+}
+.pie-box>div {
+  width: 50%;
+  float: left;
+  height: 50%;
+}
