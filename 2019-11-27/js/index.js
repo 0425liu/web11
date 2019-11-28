@@ -13,6 +13,12 @@ function chartPie(obj) {
       trigger: 'item',
       formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
+    grid: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+    },
     color: ['#00d0cc', '#007efe', '#ae7fe3', '#f85159', '#ff9255'],
     series: [{
       name: '访问来源',
@@ -45,10 +51,15 @@ function chartLine() {
   var myChart = echarts.init($('#ChartLine')[0]);
   var option = {
     color: ['#ff8d91', '#00deff'],
+    grid: {
+      left: 40,
+      right: 0,
+      top: 30,
+      bottom: 30
+    },
     legend: {
       right: 10,
       top: 0,
-      width: 100,
       textStyle: {
         color: "#fff"
       },
@@ -109,6 +120,12 @@ function chartColumn() {
         color: "#fff"
       },
     },
+    grid: {
+      left: 40,
+      right: 0,
+      top: 30,
+      bottom: 30
+    },
     color: ['#003bad', '#9b812d', '#00a7b5'],
     dataset: {
       source: [
@@ -159,6 +176,7 @@ function chartRader() {
     color: ["#00e5f8", "#5bfcec", "#8a9ec3"],
     tooltip: {},
     radar: {
+      radius: "65%",
       show: false,
       // shape: 'circle',
       name: {
@@ -215,7 +233,7 @@ function chartRader() {
 }
 chartLine()
 chartColumn()
-  // chartRader()
+chartRader()
 $(window).resize(function () {
   CHART_RESIZE.forEach(function (cb) {
     cb()

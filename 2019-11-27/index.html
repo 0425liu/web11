@@ -14,15 +14,24 @@
 
 <body>
   <header>
+    <img src="img/back.png" class="back">
     <img src="img/logo.png" alt="" class="logo">
     <img src="img/header.png" class="caption">
+    <div class="weather">
+      <span>2019-11-22 星期五 </span>
+      <span>10:05:59 </span>
+    </div>
   </header>
   <div class="content">
     <div class="l-box">
-      <div class="shadow-box">平台系统</div>
       <div class="l-chart">
         <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
           <div class="title">当月每日检测数目</div>
+          <div class="bg"></div>
           <div class="swiper-container">
             <div class="swiper-wrapper" id="Pies">
               <div class="pie-box swiper-slide">
@@ -50,19 +59,76 @@
       </div>
       <div class="l-chart">
         <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
           <div class="title">当月每日检测数及合格数目</div>
           <div id="ChartLine" style="height:100%;"></div>
         </div>
       </div>
       <div class="l-chart">
         <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
           <div class="title">年度每月检测设备合格数目</div>
           <div id="ChartColumn" style="height:100%;"></div>
         </div>
       </div>
     </div>
+    <div class="m-box">
+      <div class="l-chart">
+        <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
+          <div class="title">工位状态</div>
+        </div>
+      </div>
+      <div class="l-chart">
+        <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
+          <div class="title">工位状态</div>
+        </div>
+      </div>
+    </div>
+    <div class="r-box">
+      <div class="l-chart">
+        <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
+          <div class="title">视频监控</div>
+        </div>
+      </div>
+      <div class="l-chart">
+        <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
+          <div class="title">设备健康曲线</div>
+          <div id="ChartRader" style="height:100%;"></div>
+        </div>
+      </div>
+      <div class="l-chart">
+        <div class="bg-box">
+          <div class="arrow t-l"></div>
+          <div class="arrow t-r"></div>
+          <div class="arrow b-l"></div>
+          <div class="arrow b-r"></div>
+          <div class="title">预警信息</div>
+        </div>
+      </div>
+    </div>
   </div>
-
 </body>
 <script src="js/swiper.min.js"></script>
 <script src="js/index.js"></script>
