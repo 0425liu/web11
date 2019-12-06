@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/swiper.min.css">
+  <link rel="stylesheet" href="css/index.css">
   <script src="js/echarts.min.js"></script>
   <script src="js/jquery-1.9.0.min.js"></script>
   <title>Document</title>
@@ -34,24 +34,7 @@
           <div class="bg"></div>
           <div class="swiper-container">
             <div class="swiper-wrapper" id="Pies">
-              <div class="pie-box swiper-slide">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div class="pie-box swiper-slide">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div class="pie-box swiper-slide">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
+
             </div>
             <div class="swiper-pagination"></div>
           </div>
@@ -74,18 +57,74 @@
           <div class="arrow b-l"></div>
           <div class="arrow b-r"></div>
           <div class="title">年度每月检测设备合格数目</div>
-          <div id="ChartColumn" style="height:100%;"></div>
+          <div style="height:100%;">
+            <div class="column-container">
+              <div class="swiper-wrapper" id="ChartColumn">
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="m-box">
       <div class="l-chart" style="height:46%">
-        <div class="bg-box">
+        <div class="bg-box" style="padding:20px">
           <div class="arrow t-l"></div>
           <div class="arrow t-r"></div>
           <div class="arrow b-l"></div>
           <div class="arrow b-r"></div>
-          <div class="title">工位状态</div>
+          <div id="equip">
+            <div class="l-equip shadow-box">
+              <p>雷电冲击 <br/>检测区</p>
+
+            </div>
+            <div class="r-equip">
+              <ul>
+                <li>
+                  <div class="shadow-box">
+                    <p>铁芯<br/> 测试区</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="shadow-box">
+                    <p>
+                      直阻变笔<br/> 测试车
+                    </p>
+
+                  </div>
+                </li>
+                <li>
+                  <div class="shadow-box">
+                    <p>
+                      工频耐压<br/> 测试区
+                    </p>
+                  </div>
+                </li>
+                <li style="width: 23%">
+                  <div class="shadow-box">
+                    <p>
+                      变压器综合 <br/>测试区
+                    </p>
+                  </div>
+                </li>
+                <li style="width: 23%">
+                  <div class="shadow-box">
+                    <p>
+                      开关综合<br/> 测试区
+                    </p>
+                  </div>
+                </li>
+              </ul>
+              <div class="equp-img">
+                <img src="img/img1.png" class="" />
+              </div>
+              <div class="equp-img">
+                <img src="img/img2.png" class="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="l-chart" style="height:54%">
@@ -95,6 +134,20 @@
           <div class="arrow b-l"></div>
           <div class="arrow b-r"></div>
           <div class="title">工位状态</div>
+          <div id="working" style="height:100%;">
+            <ul class="head">
+              <li style="flex:0 0 40px"></li>
+              <li style="flex:0 0 200px">工位名称（状态）</li>
+              <li style="flex:1">设备ID（在检设备类型）</li>
+              <li style="flex:0 0 200px">项目名称</li>
+              <li style="flex:0 0 120px">任务速度</li>
+            </ul>
+            <div class="table-container">
+              <div class="swiper-wrapper" id="table">
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -108,23 +161,44 @@
           <div class="title">视频监控</div>
         </div>
       </div>
-      <div class="l-chart" style="height:23%">
+      <div class="l-chart" style="height:30%">
         <div class="bg-box">
           <div class="arrow t-l"></div>
           <div class="arrow t-r"></div>
           <div class="arrow b-l"></div>
           <div class="arrow b-r"></div>
           <div class="title">设备健康曲线</div>
-          <div id="ChartRader" style="height:100%;"></div>
+          <div id="ChartRader" style="height:100%;">
+            <div class="r-container" style="height:100%;">
+              <div class="swiper-wrapper" id="Rader">
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="l-chart" style="height:38%">
+      <div class="l-chart" style="height:31%">
         <div class="bg-box">
           <div class="arrow t-l"></div>
           <div class="arrow t-r"></div>
           <div class="arrow b-l"></div>
           <div class="arrow b-r"></div>
           <div class="title">预警信息</div>
+          <div id="information" style="height:100%;">
+            <ul class="head">
+              <li style="flex:0 0 60px">序号</li>
+              <li style="flex:1">时间</li>
+              <li style="flex:0 0 60px">类型</li>
+              <li style="flex:0 0 60px">位置</li>
+              <li style="flex:0 0 60px">级别</li>
+              <li style="flex:0 0 50px">状态</li>
+            </ul>
+            <div class="s-container">
+              <div class="swiper-wrapper" id="info">
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

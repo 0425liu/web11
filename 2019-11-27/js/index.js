@@ -1,12 +1,6 @@
-var mySwiper = new Swiper('.swiper-container', {
-  autoplay: true,
-  pagination: {
-    el: '.swiper-pagination',
-  }
-})
 var CHART_RESIZE = [];
 
-function chartPie(obj) {
+function chartPie(obj, series) {
   var myChart = echarts.init(obj);
   var option = option = {
     tooltip: {
@@ -20,34 +14,71 @@ function chartPie(obj) {
       right: 0
     },
     color: ['#00d0cc', '#007efe', '#ae7fe3', '#f85159', '#ff9255'],
-    series: [{
-      name: '访问来源',
-      type: 'pie',
-      radius: ['30%', '80%'],
-      center: ['50%', '50%'],
-      data: [{ value: 335, name: '直接访问' }, { value: 310, name: '邮件营销' }, { value: 234, name: '联盟广告' }, { value: 135, name: '视频广告' }, { value: 1548, name: '搜索引擎' }],
-    }, {
-      name: '访问来源',
-      type: 'pie',
-      radius: ['30%', '80%'],
-      center: ['50%', '50%'],
-      label: {
-        position: 'inside',
-        formatter: '{d}%'
-      },
-      data: [{ value: 335, name: '直接访问' }, { value: 310, name: '邮件营销' }, { value: 234, name: '联盟广告' }, { value: 135, name: '视频广告' }, { value: 1548, name: '搜索引擎' }],
-    }]
+    series: series
   };
   myChart.setOption(option);
   CHART_RESIZE.push(function () {
     myChart.resize()
   })
 }
-$('#Pies .pie-box>div').each(function (i, item) {
-  chartPie(item)
-})
 
-function chartLine() {
+function chartPieData() {
+  $.ajax({
+    type: "GET",
+    url: "../api/getYearData.json",
+    success: function (data) {
+      var res = data.obj;
+      var html;
+      var i = 0;
+      var series = [];
+      for (var key in res) {
+        if (res[key].length > 0) {
+          if (i % 4 == 0) {
+            html = $('<div class="pie-box swiper-slide"></div>')
+            $("#Pies").append(html)
+          }
+          series.push(
+            [{
+              name: key,
+              type: 'pie',
+              radius: ['30%', '50%'],
+              center: ['50%', '50%'],
+              data: res[key].map(function (item) {
+                return {
+                  value: item.jc,
+                  name: item.categoryname
+                }
+              })
+            }, {
+              name: key,
+              type: 'pie',
+              radius: ['30%', '50%'],
+              center: ['50%', '50%'],
+              data: res[key].map(function (item) {
+                return {
+                  value: item.jc,
+                  name: item.categoryname
+                }
+              })
+            }])
+          $(html).append('<div></div>')
+          i++
+        }
+      }
+      $('#Pies .pie-box>div').each(function (i, item) {
+        chartPie(item, series[i])
+      })
+      var mySwiper = new Swiper('.swiper-container', {
+        autoplay: true,
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+    }
+  })
+}
+
+function chartLine(xAxis, series) {
   var myChart = echarts.init($('#ChartLine')[0]);
   var option = {
     color: ['#ff8d91', '#00deff'],
@@ -71,7 +102,7 @@ function chartLine() {
     },
     xAxis: {
       type: 'category',
-      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      data: xAxis,
       axisLine: {
         lineStyle: {
           color: "#18d2ff"
@@ -95,15 +126,7 @@ function chartLine() {
         }
       },
     },
-    series: [{
-      name: "检验",
-      data: [820, 932, 901, 934, 1290, 1330, 1320, 1330, 1320, 1330, 1320, 1320],
-      type: 'line'
-    }, {
-      name: "合格",
-      data: [820, 932, 901, 934, 1290, 1330, 1320, 820, 932, 901, 934, 1290],
-      type: 'line'
-    }]
+    series: series
   };
   myChart.setOption(option);
   CHART_RESIZE.push(function () {
@@ -111,8 +134,8 @@ function chartLine() {
   })
 }
 
-function chartColumn() {
-  var myChart = echarts.init($('#ChartColumn')[0]);
+function chartColumn(id, source) {
+  var myChart = echarts.init(id);
   var option = {
     legend: {
       right: 0,
@@ -128,21 +151,7 @@ function chartColumn() {
     },
     color: ['#003bad', '#9b812d', '#00a7b5'],
     dataset: {
-      source: [
-        ['product', '变压器', '干式变压器', '油浸式变压器'],
-        ['一月', 43.3, 85.8, 93.7],
-        ['二月', 83.1, 73.4, 55.1],
-        ['三月', 43.3, 85.8, 93.7],
-        ['四月', 43.3, 85.8, 93.7],
-        ['五月', 83.1, 73.4, 55.1],
-        ['六月', 43.3, 85.8, 93.7],
-        ['七月', 43.3, 85.8, 93.7],
-        ['八月', 83.1, 73.4, 55.1],
-        ['九月', 43.3, 85.8, 93.7],
-        ['十月', 43.3, 85.8, 93.7],
-        ['十一月', 83.1, 73.4, 55.1],
-        ['十二月', 43.3, 85.8, 93.7],
-      ]
+      source: source
     },
     xAxis: {
       type: 'category',
@@ -166,64 +175,212 @@ function chartColumn() {
   };
   myChart.setOption(option);
   CHART_RESIZE.push(function () {
-    myChart.resize()
+    myChart.resize({
+      width: $('#ChartColumn').width(),
+      height: $('#ChartColumn').height(),
+    })
   })
 }
 
-function chartRader() {
-  var myChart = echarts.init($('#ChartRader')[0]);
+function objectValues(obj) {
+  var res = [];
+  for (var key in obj) {
+    res.push(obj[key])
+  }
+  return res
+}
+
+function objectKey(obj) {
+  var res = [];
+  for (var key in obj) {
+    res.push(key)
+  }
+  return res
+}
+
+function chartLineData() {
+  $.ajax({
+    type: "GET",
+    url: "../api/getCurMonthEveryDayData.json",
+    success: function (data) {
+      var res = data.obj;
+      var xAxis = objectKey(res.checkData[0])
+      var series = [{
+        name: "检验",
+        data: objectValues(res.checkData[0]),
+        type: 'line'
+      }, {
+        name: "合格",
+        data: objectValues(res.qualifiedData[0]),
+        type: 'line'
+      }]
+      chartLine(xAxis, series);
+    }
+  })
+}
+
+function working() { //工位状态
+  $.ajax({
+    type: "GET",
+    url: "../api/getworkstationData.json",
+    success: function (data) {
+      var res = data.obj;
+      var html;
+      res.forEach(function (item, i) {
+        if (i % 10 == 0) {
+          html = $("<div class='swiper-slide'></div>");
+          $("#table").append(html)
+        }
+        ++i;
+        var span = "<span class='circular' style='width:" + parseInt(item.finishrate) + "%'></span>"
+        var div = "<div class='flex'><div style='flex:0 0 40px'>" + i + "</div>"
+        div += "<div style='flex:0 0 200px'>" + item.workname + "</div>"
+        div += "<div style='flex:1'>" + item.encodingcode + "</div>"
+        div += "<div style='flex:0 0 200px'>" + item.testitemname + "</div>"
+        div += "<div style='flex:0 0 120px'>" + span + "</div></div>"
+        html.append(div)
+      })
+      new Swiper('.table-container', {
+        direction: 'vertical',
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+    }
+  })
+}
+
+function chartColumnData() { //年度每月检测设备合格数目
+  $.ajax({
+    type: "GET",
+    url: "../api/getYearQualifiedData.json",
+    success: function (data) {
+      var res = data.obj;
+      var obj = {};
+      for (var key in res) {
+        var arr = res[key];
+        arr.forEach(function (item, i) {
+          obj[item.categoryname] = obj[item.categoryname] || [];
+          obj[item.categoryname].push(item.jc)
+        })
+      }
+      var source = [];
+      var num = 0;
+      for (var key in obj) {
+        var arrResult = obj[key];
+        if (num % 3 == 0) {
+          var arr = [
+            ['product'],
+            ['一月'],
+            ['二月'],
+            ['三月'],
+            ['四月'],
+            ['五月'],
+            ['六月'],
+            ['七月'],
+            ['八月'],
+            ['九月'],
+            ['十月'],
+            ['十一月'],
+            ['十二月'],
+          ]
+          source.push(arr)
+        }
+        arr[0].push(key);
+        arrResult.forEach(function (v, i) {
+          arr[i + 1].push(v)
+        })
+        num++
+      }
+      var length = source.length;
+      for (var i = 0; i < length; i++) {
+        $("#ChartColumn").append('<div class="swiper-slide"><div class="column-box "></div></div>')
+      }
+      new Swiper('.column-container', {
+        autoplay: true,
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+      $('#ChartColumn .column-box ').each(function (i, item) {
+        chartColumn(item, source[i])
+      })
+    }
+  })
+}
+
+function information() { //预警信息
+  $.ajax({
+    type: "GET",
+    url: "../api/getearlyalarm.json",
+    success: function (data) {
+      var res = data.obj;
+      var html;
+      res.forEach(function (item, i) {
+        if (i % 5 == 0) {
+          html = $("<div class='swiper-slide'></div>");
+          $("#info").append(html)
+        }
+        ++i;
+        var div = '<div class="flex"><div style="flex:0 0 60px">' + i + '</div>'
+        div += '<div style="flex:1">' + item.alarm_time + '</div>'
+        div += '<div style="flex:0 0 60px">' + item.alarm_type + '</div>'
+        div += '<div style="flex:0 0 60px">' + item.point_name + '</div>'
+        div += '<div style="flex:0 0 60px"><span class="status">红色</span></div>'
+        div += '<div style="flex:0 0 50px">' + item.isdispose + '</div></div>'
+        html.append(div)
+      })
+      new Swiper('.s-container', {
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+    }
+  })
+}
+
+function chartRader(obj, data) {
+  console.log(data)
+  var myChart = echarts.init(obj);
   var option = {
     color: ["#00e5f8", "#5bfcec", "#8a9ec3"],
-    tooltip: {},
+    tooltip: {
+      confine: true
+        //show: true
+    },
+    legend: {
+      right: 0,
+      top: 0,
+      textStyle: {
+        color: 'fff'
+      },
+      data: [{
+        name: data.title,
+        icon: 'rect'
+      }]
+    },
     radar: {
       radius: "65%",
       show: false,
+      splitNumber: 3,
       // shape: 'circle',
       name: {
         textStyle: {
           color: '#fff',
-          backgroundColor: '#00defe',
           borderRadius: 3,
           padding: [3, 5]
         }
       },
-      indicator: [{
-        name: '1',
-        max: 6500
-      }, {
-        name: '2',
-        max: 16000
-      }, {
-        name: '3',
-        max: 30000
-      }, {
-        name: '4',
-        max: 38000
-      }, {
-        name: '5',
-        max: 52000
-      }, {
-        name: '6',
-        max: 25000
-      }, {
-        name: '7',
-        max: 25000
-      }]
+      axisLable: {
+        backgroundColor: 'transprarent'
+      },
+      indicator: data.indicator,
     },
     series: [{
-      name: '预算 vs 开销（Budget vs spending）',
+      name: data.title,
       type: 'radar',
       // areaStyle: {normal: {}},
-      data: [{
-        value: [4300, 10000, 28000, 35000, 50000, 19000, 19000],
-        name: '预算分配（Allocated Budget）'
-      }, {
-        value: [430, 1000, 2800, 3500, 5000, 1900, 1900],
-        name: '预算分配（Allocated Budget）'
-      }, {
-        value: [5000, 14000, 28000, 31000, 42000, 21000, 21000],
-        name: '实际开销（Actual Spending）'
-      }]
+      data: data.data
     }]
   };
   myChart.setOption(option);
@@ -231,11 +388,61 @@ function chartRader() {
     myChart.resize()
   })
 }
-chartLine()
-chartColumn()
-chartRader()
+
+function chartRaderData() {
+  $.ajax({
+    type: "GET",
+    url: "../api/getRadar.json",
+    success: function (data) {
+      var res = data.obj;
+      var result = []
+      res.forEach(function (obj, i) {
+        result[i] = result[i] || {
+          indicator: [],
+          data: [{
+            value: [],
+            name: "",
+          }],
+          title: "",
+        }
+        var radarData = result[i];
+        for (var key in obj) {
+          if (key !== "deviceName") {
+            radarData.indicator.push({
+              name: key,
+              max: 100,
+            })
+            radarData.data[0].value.push(obj[key])
+          } else {
+            radarData.data[0].name = obj[key]
+            radarData.title = obj[key]
+          }
+        }
+      })
+      for (var i = 0, length = res.length; i < length; i++) {
+        $("#Rader").append('<div class=" swiper-slide"></div>')
+      }
+      new Swiper('.r-container', {
+        effect: 'fade',
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      })
+      $('#Rader .swiper-slide').each(function (i, item) {
+        chartRader(item, result[i])
+      })
+    }
+  })
+}
+chartPieData() //当月每日检测数目
+chartLineData() //当月每日检测数及合格数目
+chartColumnData() //年度每月检测设备合格数目
+chartRaderData(); //设备健康曲线
+working() //工位状态
+information() //预警信息
 $(window).resize(function () {
   CHART_RESIZE.forEach(function (cb) {
+    console.log(cb)
     cb()
   })
 })
